@@ -1,0 +1,48 @@
+{
+  message: 'Could not connect to the database. Exiting now... getaddrinfo ENOTFOUND localhos',
+  reason: TopologyDescription {
+    type: 'Unknown',
+    servers: Map(1) {
+      'localhos:27017' => ServerDescription {
+        _hostAddress: HostAddress { isIPv6: false, host: 'localhos', port: 27017 },
+        address: 'localhos:27017',
+        type: 'Unknown',
+        hosts: [],
+        passives: [],
+        arbiters: [],
+        tags: {},
+        minWireVersion: 0,
+        maxWireVersion: 0,
+        roundTripTime: -1,
+        lastUpdateTime: 380027054,
+        lastWriteDate: 0,
+        error: MongoNetworkError: getaddrinfo ENOTFOUND localhos
+            at connectionFailureError (C:\Users\adithya.shenoy_ymedi\Desktop\node\Nodejs\easy-note\node_modules\mongodb\lib\cmap\connect.js:293:20)
+            at Socket.<anonymous> (C:\Users\adithya.shenoy_ymedi\Desktop\node\Nodejs\easy-note\node_modules\mongodb\lib\cmap\connect.js:267:22)
+            at Object.onceWrapper (events.js:520:26)
+            at Socket.emit (events.js:400:28)
+            at emitErrorNT (internal/streams/destroy.js:106:8)
+            at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+            at processTicksAndRejections (internal/process/task_queues.js:82:21)
+      }
+    },
+    stale: false,
+    compatible: true,
+    heartbeatFrequencyMS: 10000,
+    localThresholdMS: 15,
+    logicalSessionTimeoutMinutes: undefined
+  },
+  level: 'error',
+  stack: 'MongooseServerSelectionError: getaddrinfo ENOTFOUND localhos\n' +
+    '    at NativeConnection.Connection.openUri (C:\\Users\\adithya.shenoy_ymedi\\Desktop\\node\\Nodejs\\easy-note\\node_modules\\mongoose\\lib\\connection.js:796:32)\n' +
+    '    at C:\\Users\\adithya.shenoy_ymedi\\Desktop\\node\\Nodejs\\easy-note\\node_modules\\mongoose\\lib\\index.js:329:10\n' +
+    '    at C:\\Users\\adithya.shenoy_ymedi\\Desktop\\node\\Nodejs\\easy-note\\node_modules\\mongoose\\lib\\helpers\\promiseOrCallback.js:32:5\n' +
+    '    at new Promise (<anonymous>)\n' +
+    '    at promiseOrCallback (C:\\Users\\adithya.shenoy_ymedi\\Desktop\\node\\Nodejs\\easy-note\\node_modules\\mongoose\\lib\\helpers\\promiseOrCallback.js:31:10)\n' +
+    '    at Mongoose._promiseOrCallback (C:\\Users\\adithya.shenoy_ymedi\\Desktop\\node\\Nodejs\\easy-note\\node_modules\\mongoose\\lib\\index.js:1150:10)\n' +
+    '    at Mongoose.connect (C:\\Users\\adithya.shenoy_ymedi\\Desktop\\node\\Nodejs\\easy-note\\node_modules\\mongoose\\lib\\index.js:328:20)\n' +
+    '    at dbConnect (C:\\Users\\adithya.shenoy_ymedi\\Desktop\\node\\Nodejs\\easy-note\\server.js:18:14)\n' +
+    '    at Server.<anonymous> (C:\\Users\\adithya.shenoy_ymedi\\Desktop\\node\\Nodejs\\easy-note\\server.js:33:4)\n' +
+    '    at Object.onceWrapper (events.js:519:28)',
+  timestamp: '2021-10-08T11:52:27.357Z'
+}
