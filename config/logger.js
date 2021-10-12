@@ -20,4 +20,4 @@ const logger = createLogger({
   transports: [transport],
 });
 
-module.exports = logger;
+module.exports = logger
