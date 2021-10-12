@@ -1,16 +1,18 @@
 const userService = require("../service/user.service.js");
+const logger = require("../../config/logger");
 
 class userController {
   //creates a user in the database
   registerUser = (req, res) => {
     let body = req.body;
-    userService.registerUser(body,(err, data) => {
+    userService.registerUser(body, (err, data) => {
       if (err) {
+        logger.error(err);
         res.status(500).send({
-          message:
-            err.message || "Some error occurred while registeration",
+          message: err.message || "Some error occurred while registeration",
         });
       }
+      logger.info("Registeration Successful");
       res.status(200).send(data);
     });
   };
@@ -19,11 +21,12 @@ class userController {
   findAllUser = (req, res) => {
     userService.findAllUser((err, data) => {
       if (err) {
+        logger.error(err);
         res.status(500).send({
-          message:
-            err.message || "Some error occurred.",
+          message: err.message || "Some error occurred.",
         });
       }
+      logger.info("Retrieval successfull");
       res.status(200).send(data);
     });
   };
@@ -33,7 +36,7 @@ class userController {
     let id = req.params.userID;
     userService.findOneUser(id, (err, data) => {
       if (err) {
-        console.log(err);
+        logger.error(err);
         if (err.kind === "ObjectId") {
           return res.send({
             message: "User not found with id " + id,
@@ -48,6 +51,7 @@ class userController {
           message: "User not found with id (in then) " + id,
         });
       }
+      logger.info("Retrieval Successful");
       res.status(200).send({ User: data });
     });
   };
@@ -58,6 +62,7 @@ class userController {
     let body = req.body;
     userService.updateUserDetail(id, body, (err, data) => {
       if (err) {
+        logger.error(err);
         if (err.kind === "ObjectId") {
           return res.send({
             message: "User not found with id " + id,
@@ -72,7 +77,8 @@ class userController {
           message: "User not found with id (in then) " + id,
         });
       }
-      res.send({ message:"Update Succesfull",User: data });
+      logger.info("Updated succesfully");
+      res.send({ message: "Update Succesfull", User: data });
     });
   };
 
@@ -81,6 +87,7 @@ class userController {
     let id = req.params.userID;
     userService.deleteUser(id, (err, data) => {
       if (err) {
+        logger.error(err);
         if (err.kind === "ObjectId") {
           return res.send({
             message: "User not found with id " + id,
@@ -95,6 +102,7 @@ class userController {
           message: "User not found with id (in then) " + id,
         });
       }
+      logger.info("delete succesfully");
       res.send("Deleted successfully");
     });
   };
