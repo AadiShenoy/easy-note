@@ -11,11 +11,11 @@ const NoteSchema = mongoose.Schema(
 
 const myNote = mongoose.model("Note", NoteSchema);
 
-class userModel {
+class noteModel {
   //creates a note and saves it in database
   createNote = (title, content, callback) => {
     const note = new myNote({
-      title: title || "Untitled Note",
+      title: title,
       content: content,
     });
     // Save Note in the database
@@ -37,6 +37,7 @@ class userModel {
       return err ? callback(err, null) : callback(null, data);
     });
   };
+  
 
   // Update a note identified by the noteId in the request
   updateNote = (noteId, title, content, callback) => {
@@ -62,4 +63,4 @@ class userModel {
   };
 }
 
-module.exports = new userModel();
+module.exports = new noteModel();

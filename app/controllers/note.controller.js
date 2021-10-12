@@ -1,11 +1,10 @@
-const userService = require("../service/note.service.js");
+const noteService = require("../service/note.service.js");
 
-class userController {
+class noteController {
   //creates a note in the database
   createNote = (req, res) => {
-    let title = req.body.title || "Untitled Note";
-    let content = req.body.content;
-    userService.createNote(title, content, (err, data) => {
+    let body = req.body;
+    noteService.createNote(body,(err, data) => {
       if (err) {
         res.status(500).send({
           message:
@@ -18,7 +17,7 @@ class userController {
 
   // Retrieve and return all notes from the database.
   findAll = (req, res) => {
-    userService.findAll((err, data) => {
+    noteService.findAll((err, data) => {
       if (err) {
         res.status(500).send({
           message:
@@ -32,10 +31,12 @@ class userController {
   // Find a single note with a noteId
   findOne = (req, res) => {
     let id = req.params.noteId;
-    userService.findOne(id, (err, data) => {
+    noteService.findOne(id, (err, data) => {
+      console.log("result: "+data);
       if (err) {
+        console.log(err);
         if (err.kind === "ObjectId") {
-          return res.status(404).send({
+          return res.send({
             message: "Note not found with id " + id,
           });
         }
@@ -55,12 +56,11 @@ class userController {
   // Update a note identified by the noteId in the request
   updateNote = (req, res) => {
     let id = req.params.noteId;
-    let title = req.body.title;
-    let content = req.body.content;
-    userService.updateNote(id, title, content, (err, data) => {
+    let body = req.body;
+    noteService.updateNote(id, body, (err, data) => {
       if (err) {
         if (err.kind === "ObjectId") {
-          return res.status(404).send({
+          return res.send({
             message: "Note not found with id " + id,
           });
         }
@@ -70,7 +70,7 @@ class userController {
       }
       if (!data) {
         return res.status(404).send({
-          message: "Note not found with id " + id,
+          message: "Note not found with id (in then) " + id,
         });
       }
       res.send({ message:"Update Succesfull",Note: data });
@@ -80,10 +80,10 @@ class userController {
   // Delete a note with the specified noteId in the request
   deleteOne = (req, res) => {
     let id = req.params.noteId;
-    userService.deleteOne(id, (err, data) => {
+    noteService.deleteOne(id, (err, data) => {
       if (err) {
         if (err.kind === "ObjectId") {
-          return res.status(404).send({
+          return res.send({
             message: "Note not found with id " + id,
           });
         }
@@ -93,7 +93,7 @@ class userController {
       }
       if (!data) {
         return res.status(404).send({
-          message: "Note not found with id " + id,
+          message: "Note not found with id (in then) " + id,
         });
       }
       res.send("Deleted node successfully");
@@ -101,4 +101,4 @@ class userController {
   };
 }
 
-module.exports = new userController();
+module.exports = new noteController();

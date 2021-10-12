@@ -1,37 +1,37 @@
-const userModel = require("../models/note.model.js");
+const noteModel = require("../models/note.model.js");
 
-class userService {
-  createNote = (title, content,callback) => {
-    userModel.createNote(title, content,(err,data)=>{
+class noteService {
+  createNote = (body,callback) => {
+    noteModel.createNote(body.title,body.content,(err,data)=>{
         return err ? callback(err, null) : callback(null, data);
     })
       
   };
 
   findAll = (callback) => {
-    userModel.findAll((err,data) => {
+    noteModel.findAll((err,data) => {
         return err ? callback(err, null) : callback(null, data);
     })    
   };
 
-  findOne = (findId, callback) => {
-    userModel.findOne(findId, (err, data) => {
+  findOne = (noteId, callback) => {
+    noteModel.findOne(noteId, (err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
   };
 
-  updateNote = (findId, title, content,callback) => {
-    userModel.updateNote(findId,title,content,(err,data) => {
+  updateNote = (noteId,body,callback) => {
+    noteModel.updateNote(noteId,body.title,body.content,(err,data) => {
         return err ? callback(err, null) : callback(null, data);
       }
     );
   };
 
-  deleteOne = (findId,callback) => {
-    userModel.deleteOne(findId,(err,data) => {
+  deleteOne = (noteId,callback) => {
+    noteModel.deleteOne(noteId,(err,data) => {
         return err ? callback(err, null) : callback(null, data);
     });
   };
 }
 
-module.exports = new userService();
+module.exports = new noteService();
