@@ -4,7 +4,12 @@ const userSchema = mongoose.Schema(
     firstName: String,
     lastName: String,
     age:Number,
-    email:String
+    email:{
+      type:String,
+      unique:true,
+      index:true,
+      required:true
+    }
   },
   {
     timestamps: true,
@@ -15,7 +20,7 @@ const myUser = mongoose.model("User", userSchema);
 
 class userModel {
   //creates a user and saves it in database
-  registerUser = (body, callback) => {
+  registerUser = (body, callback) => {   
     const user = new myUser({
       firstName: body.firstName,
       lastName: body.lastName,
@@ -42,7 +47,6 @@ class userModel {
     });
   };
   
-
   // Update a user identified by the userID in the request
   updateUserDetail = (userID, body, callback) => {
     // Find user and update it with the request body

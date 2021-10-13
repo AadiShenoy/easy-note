@@ -1,9 +1,15 @@
 const userService = require("../service/user.service.js");
 const logger = require("../../config/logger");
+const { validationResult } = require('express-validator');
 
 class userController {
   //creates a user in the database
   registerUser = (req, res) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array()});
+    }
     let body = req.body;
     userService.registerUser(body, (err, data) => {
       if (err) {
@@ -58,6 +64,10 @@ class userController {
 
   // Update a user identified by the userID in the request
   updateUserDetail = (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array()});
+    }
     let id = req.params.userID;
     let body = req.body;
     userService.updateUserDetail(id, body, (err, data) => {
