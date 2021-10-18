@@ -3,6 +3,13 @@ const userController = require("../controllers/user.controller.js");
 const userRoute = express.Router();
 const userMiddleware = require("../middleware/user.middleware.js");
 const { body } = require("express-validator");
+
+//User login
+userRoute.post(
+  "/login",
+  userController.loginUser
+);
+
 // Create a new User
 userRoute.post(
   "/",
@@ -16,7 +23,7 @@ userRoute.post(
     .withMessage(
       "Last Name should begin with caps and should be minimum of length 3"
     ),
-  body("age").isNumeric().withMessage("Enter a valid age"),
+  body("age").isNumeric().withMessage("Enter a valid age between (1-100"),
   body("email").isEmail().withMessage("Enter a valid Email"),
   userController.registerUser
 );

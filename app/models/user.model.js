@@ -3,13 +3,17 @@ const userSchema = mongoose.Schema(
   {
     firstName: String,
     lastName: String,
-    age:Number,
-    email:{
-      type:String,
-      unique:true,
-      index:true,
-      required:true
-    }
+    age: {
+      type: Number,
+      min: 1,
+      max: 100,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: String,
   },
   {
     timestamps: true,
@@ -19,13 +23,21 @@ const userSchema = mongoose.Schema(
 const myUser = mongoose.model("User", userSchema);
 
 class userModel {
+  //user login
+  loginUser = (body, callback) => {
+    return myUser.findOne({ email: body.email }, (err, data) => {
+      return err ? callback(err, null) : callback(null, data);
+    });
+  };
+
   //creates a user and saves it in database
-  registerUser = (body, callback) => {   
+  registerUser = (body, callback) => {
     const user = new myUser({
       firstName: body.firstName,
       lastName: body.lastName,
-      age:body.age,
-      email:body.email
+      age: body.age,
+      email: body.email,
+      password: body.password,
     });
     // Save userDetails in the database
     return user.save((err, data) => {
@@ -46,7 +58,7 @@ class userModel {
       return err ? callback(err, null) : callback(null, data);
     });
   };
-  
+
   // Update a user identified by the userID in the request
   updateUserDetail = (userID, body, callback) => {
     // Find user and update it with the request body
@@ -55,8 +67,8 @@ class userModel {
       {
         firstName: body.firstName,
         lastName: body.lastName,
-        age:body.age,
-        email:body.email
+        age: body.age,
+        email: body.email,
       },
       { new: true },
       (err, data) => {

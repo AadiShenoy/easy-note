@@ -5,9 +5,6 @@ const { combine, timestamp, prettyPrint, json } = format;
 var transport = new transports.DailyRotateFile({
   filename: "./logger/Log-%DATE%.log",
   datePattern: "DD-MM-YYYY",
-  zippedArchive: true,
-  maxSize: "20m",
-  maxFiles: "14d",
 });
 
 const logger = createLogger({

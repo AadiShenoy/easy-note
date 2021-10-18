@@ -1,17 +1,20 @@
 const noteService = require("../service/note.service.js");
+const dtoObject = require("../../dto/note.dto");
 
+let responseObject;
 class noteController {
   //creates a note in the database
   createNote = (req, res) => {
     let body = req.body;
-    noteService.createNote(body,(err, data) => {
+    noteService.createNote(body, (err, data) => {
       if (err) {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while creating the Note.",
-        });
+        responseObject = dtoObject.noteApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
-      res.status(200).send(data);
+      responseObject = dtoObject.noteApiSuccess;
+      responseObject.message = data;
+      res.send(responseObject);
     });
   };
 
@@ -19,12 +22,13 @@ class noteController {
   findAll = (req, res) => {
     noteService.findAll((err, data) => {
       if (err) {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while creating the Note.",
-        });
+        responseObject = dtoObject.noteApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
-      res.status(200).send(data);
+      responseObject = dtoObject.noteApiSuccess;
+      responseObject.message = data;
+      res.send(responseObject);
     });
   };
 
@@ -32,24 +36,25 @@ class noteController {
   findOne = (req, res) => {
     let id = req.params.noteId;
     noteService.findOne(id, (err, data) => {
-      console.log("result: "+data);
+      console.log("result: " + data);
       if (err) {
         console.log(err);
         if (err.kind === "ObjectId") {
-          return res.send({
-            message: "Note not found with id " + id,
-          });
+          responseObject = dtoObject.noteApiFindFailure;
+          responseObject.message = err.message;
+          res.send(responseObject);
         }
-        return res.status(500).send({
-          message: "Error retrieving note with id " + id,
-        });
+        responseObject = dtoObject.noteApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
       if (!data) {
-        return res.status(404).send({
-          message: "Note not found with id (in then) " + id,
-        });
+        responseObject = dtoObject.noteApiFindFailure;
+        res.send(responseObject);
       }
-      res.status(200).send({ Note: data });
+      responseObject = dtoObject.noteApiSuccess;
+      responseObject.message = data;
+      res.send(responseObject);
     });
   };
 
@@ -60,20 +65,21 @@ class noteController {
     noteService.updateNote(id, body, (err, data) => {
       if (err) {
         if (err.kind === "ObjectId") {
-          return res.send({
-            message: "Note not found with id " + id,
-          });
+          responseObject = dtoObject.noteApiFindFailure;
+          responseObject.message = err.message;
+          res.send(responseObject);
         }
-        return res.status(500).send({
-          message: "Error updating note with id " + id,
-        });
+        responseObject = dtoObject.noteApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
       if (!data) {
-        return res.status(404).send({
-          message: "Note not found with id (in then) " + id,
-        });
+        responseObject = dtoObject.noteApiFindFailure;
+        res.send(responseObject);
       }
-      res.send({ message:"Update Succesfull",Note: data });
+      responseObject = dtoObject.noteApiSuccess;
+      responseObject.message = data;
+      res.send(responseObject);
     });
   };
 
@@ -83,20 +89,21 @@ class noteController {
     noteService.deleteOne(id, (err, data) => {
       if (err) {
         if (err.kind === "ObjectId") {
-          return res.send({
-            message: "Note not found with id " + id,
-          });
+          responseObject = dtoObject.noteApiFindFailure;
+          responseObject.message = err.message;
+          res.send(responseObject);
         }
-        return res.status(500).send({
-          message: "Error deleting note with id " + id,
-        });
+        responseObject = dtoObject.noteApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
       if (!data) {
-        return res.status(404).send({
-          message: "Note not found with id (in then) " + id,
-        });
+        responseObject = dtoObject.noteApiFindFailure;
+        res.send(responseObject);
       }
-      res.send("Deleted node successfully");
+      responseObject = dtoObject.noteApiSuccess;
+      responseObject.message = "deleted successfully";
+      res.send(responseObject);
     });
   };
 }

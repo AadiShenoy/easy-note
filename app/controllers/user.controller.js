@@ -1,25 +1,47 @@
 const userService = require("../service/user.service.js");
 const logger = require("../../config/logger");
-const { validationResult } = require('express-validator');
+const { validationResult } = require("express-validator");
+const dtoObject = require("../../dto/user.dto");
+let responseObject;
 
 class userController {
+  //user login
+  loginUser = (req, res) => {
+    let body = req.body;
+    userService.loginUser(body, (err, data) => {
+      if (err) {
+        logger.error(err);
+        responseObject = dtoObject.userApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
+      }
+      logger.info("login Successful");
+      responseObject = dtoObject.userApiSuccess;
+      responseObject.message = data;
+      res.send(responseObject);
+    });
+  };
+
   //creates a user in the database
   registerUser = (req, res) => {
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array()});
+      responseObject = dtoObject.userApiFailure;
+      responseObject.message = errors.array();
+      res.send(responseObject);
     }
     let body = req.body;
     userService.registerUser(body, (err, data) => {
       if (err) {
         logger.error(err);
-        res.status(500).send({
-          message: err.message || "Some error occurred while registeration",
-        });
+        responseObject = dtoObject.userApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
       logger.info("Registeration Successful");
-      res.status(200).send(data);
+      responseObject = dtoObject.userApiSuccess;
+      responseObject.message = data;
+      res.send(responseObject);
     });
   };
 
@@ -28,12 +50,14 @@ class userController {
     userService.findAllUser((err, data) => {
       if (err) {
         logger.error(err);
-        res.status(500).send({
-          message: err.message || "Some error occurred.",
-        });
+        responseObject = dtoObject.userApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
       logger.info("Retrieval successfull");
-      res.status(200).send(data);
+      responseObject = dtoObject.userApiSuccess;
+      responseObject.message = data;
+      res.send(responseObject);
     });
   };
 
@@ -44,21 +68,22 @@ class userController {
       if (err) {
         logger.error(err);
         if (err.kind === "ObjectId") {
-          return res.send({
-            message: "User not found with id " + id,
-          });
+          responseObject = dtoObject.userApiFindFailure;
+          responseObject.message = err.message;
+          res.send(responseObject);
         }
-        return res.status(500).send({
-          message: "Error retrieving user with id " + id,
-        });
+        responseObject = dtoObject.userApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
       if (!data) {
-        return res.status(404).send({
-          message: "User not found with id (in then) " + id,
-        });
+        responseObject = dtoObject.userApiFindFailure;
+        res.send(responseObject);
       }
       logger.info("Retrieval Successful");
-      res.status(200).send({ User: data });
+      responseObject = dtoObject.userApiSuccess;
+      responseObject.message = data;
+      res.send(responseObject);
     });
   };
 
@@ -66,7 +91,7 @@ class userController {
   updateUserDetail = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array()});
+      return res.status(400).json({ errors: errors.array() });
     }
     let id = req.params.userID;
     let body = req.body;
@@ -74,21 +99,22 @@ class userController {
       if (err) {
         logger.error(err);
         if (err.kind === "ObjectId") {
-          return res.send({
-            message: "User not found with id " + id,
-          });
+          responseObject = dtoObject.userApiFindFailure;
+          responseObject.message = err.message;
+          res.send(responseObject);
         }
-        return res.status(500).send({
-          message: "Error updating user with id " + id,
-        });
+        responseObject = dtoObject.userApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
       if (!data) {
-        return res.status(404).send({
-          message: "User not found with id (in then) " + id,
-        });
+        responseObject = dtoObject.userApiFindFailure;
+        res.send(responseObject);
       }
       logger.info("Updated succesfully");
-      res.send({ message: "Update Succesfull", User: data });
+      responseObject = dtoObject.userApiSuccess;
+      responseObject.message = "Updated Successfully";
+      res.send(responseObject);
     });
   };
 
@@ -99,21 +125,22 @@ class userController {
       if (err) {
         logger.error(err);
         if (err.kind === "ObjectId") {
-          return res.send({
-            message: "User not found with id " + id,
-          });
+          responseObject = dtoObject.userApiFindFailure;
+          responseObject.message = err.message;
+          res.send(responseObject);
         }
-        return res.status(500).send({
-          message: "Error deleting user with id " + id,
-        });
+        responseObject = dtoObject.userApiFailure;
+        responseObject.message = err.message;
+        res.send(responseObject);
       }
       if (!data) {
-        return res.status(404).send({
-          message: "User not found with id (in then) " + id,
-        });
+        responseObject = dtoObject.userApiFindFailure;
+        res.send(responseObject);
       }
       logger.info("delete succesfully");
-      res.send("Deleted successfully");
+      responseObject = dtoObject.userApiSuccess;
+      responseObject.message = "deleted successfully";
+      res.send(responseObject);
     });
   };
 }
