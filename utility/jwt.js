@@ -1,17 +1,19 @@
+require('dotenv').config();
 const jwt = require("jsonwebtoken");
 
 exports.generateToken = (email) => {
+  console.log(process.env.mySecretKey);
   return jwt.sign(
     {
       email: email,
     },
-    "secret",
+    process.env.mySecretKey,
     { expiresIn: "1h" }
   );
 };
 
 exports.verifyToken = (token,callback) => {
-   return jwt.verify(token, "secret",(err,data)=>{
+   return jwt.verify(token, process.env.mySecretKey,(err,data)=>{
     return err ? callback(err, null) : callback(null, data);
    });
 };

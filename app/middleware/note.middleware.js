@@ -22,21 +22,17 @@ class noteValidation {
 
   ensureToken = (req, res, next) => {
     const bearerHeader = req.headers["authorization"];
-    if(!bearerHeader){
-      res.send("Token is empty")
+    if (!bearerHeader) {
+      res.send("Token is empty");
     }
     const bearer = bearerHeader.split(" ");
     const token = bearer[1];
-    if (token) {
-      jwtHelper.verifyToken(token, (err, data) => {
-        if (err) {
-          res.send(err);
-        }
-      });
+    jwtHelper.verifyToken(token, (err, data) => {
+      if (err) {
+        res.send(err);
+      }
       next();
-    } else {
-      res.send("No token supplied");
-    }
+    });
   };
 }
 
