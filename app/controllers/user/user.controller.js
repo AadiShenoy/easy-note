@@ -1,7 +1,7 @@
-const userService = require("../service/user.service.js");
-const logger = require("../../config/logger");
+const userService = require("../../service/user.service");
+const logger = require("../../../config/logger");
 const { validationResult } = require("express-validator");
-const dtoObject = require("../../dto/user.dto");
+const dtoObject = require("./user.responseSchema");
 let responseObject;
 
 class userController {
@@ -12,8 +12,8 @@ class userController {
       if (err) {
         logger.error(err);
         responseObject = dtoObject.userApiFailure;
-        responseObject.message = err.message;
-        res.send(responseObject);
+        responseObject.message = err;
+        return res.send(responseObject);
       }
       logger.info("login Successful");
       responseObject = dtoObject.userApiSuccess;

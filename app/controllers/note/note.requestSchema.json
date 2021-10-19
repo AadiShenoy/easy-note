@@ -1,5 +1,5 @@
 {
-  "Note schema": {
+  "noteSchema": {
     "noteCreateAPI": {
       "url": "/notes",
       "method": "POST",
@@ -9,7 +9,7 @@
       },
       "headers": {
         "content-type": "json/application",
-        "authorization": "Bearer token"
+        "authorization": "Bearer 'token'"
       }
     },
     "noteFindAllAPI": {

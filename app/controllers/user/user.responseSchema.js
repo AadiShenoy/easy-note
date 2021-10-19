@@ -14,8 +14,5 @@ module.exports = {
     userValidationFailure:{
         status:400,
         message:""
-    },
-    userAuthFail:{
-        
     }
 }

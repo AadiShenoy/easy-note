@@ -1,5 +1,5 @@
-const noteService = require("../service/note.service.js");
-const dtoObject = require("../../dto/note.dto");
+const noteService = require("../../service/note.service");
+const dtoObject = require("./note.responseSchema");
 
 let responseObject;
 class noteController {

@@ -6,12 +6,12 @@ class userService {
       if (err) {
         return callback(err, null);
       } else {
-        if (body.email == data.email && body.password == data.password) {
+        if (body.password == data.password) {
           var token = jwtHelper.generateToken(body.email);
           var result = data + "Token:" + token;
           return callback(null, result);
         } else {
-          return callback(err,null);
+          return callback("password mismatch");
         }
       }
     });
