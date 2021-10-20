@@ -1,12 +1,14 @@
 const userModel = require("../models/user.model.js");
 const jwtHelper = require("../../utility/jwt");
+const bcrypt = require("bcrypt");
+
 class userService {
   loginUser = (body, callback) => {
     userModel.loginUser(body, (err, data) => {
       if (err) {
         return callback(err, null);
       } else {
-        if (body.password == data.password) {
+        if (bcrypt.compareSync(body.password, data.password)) {
           var token = jwtHelper.generateToken(body.email);
           var result = data + "Token:" + token;
           return callback(null, result);
@@ -29,8 +31,8 @@ class userService {
     });
   };
 
-  findOneUser = (userID, callback) => {
-    userModel.findOneUser(userID, (err, data) => {
+  findOneUser = (email, callback) => {
+    userModel.findOneUser(email, (err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
   };

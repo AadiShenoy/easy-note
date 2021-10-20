@@ -34,27 +34,25 @@ class noteController {
 
   // Find a single note with a noteId
   findOne = (req, res) => {
-    let id = req.params.noteId;
-    noteService.findOne(id, (err, data) => {
-      console.log("result: " + data);
+    noteService.findOne(req.params.noteId, (err, data) => {
       if (err) {
         console.log(err);
         if (err.kind === "ObjectId") {
           responseObject = dtoObject.noteApiFindFailure;
           responseObject.message = err.message;
-          res.send(responseObject);
+          return res.send(responseObject);
         }
         responseObject = dtoObject.noteApiFailure;
         responseObject.message = err.message;
-        res.send(responseObject);
+        return res.send(responseObject);
       }
       if (!data) {
         responseObject = dtoObject.noteApiFindFailure;
-        res.send(responseObject);
+        return res.send(responseObject);
       }
       responseObject = dtoObject.noteApiSuccess;
       responseObject.message = data;
-      res.send(responseObject);
+      return res.send(responseObject);
     });
   };
 

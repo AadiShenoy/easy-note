@@ -63,8 +63,8 @@ class userController {
 
   // Find a single user with a userID
   findOneUser = (req, res) => {
-    let id = req.params.userID;
-    userService.findOneUser(id, (err, data) => {
+    let email = req.params.userID
+    userService.findOneUser(email, (err, data) => {
       if (err) {
         logger.error(err);
         if (err.kind === "ObjectId") {
@@ -101,11 +101,11 @@ class userController {
         if (err.kind === "ObjectId") {
           responseObject = dtoObject.userApiFindFailure;
           responseObject.message = err.message;
-          res.send(responseObject);
+          return res.send(responseObject);
         }
         responseObject = dtoObject.userApiFailure;
         responseObject.message = err.message;
-        res.send(responseObject);
+        return res.send(responseObject);
       }
       if (!data) {
         responseObject = dtoObject.userApiFindFailure;
