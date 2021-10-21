@@ -5,10 +5,7 @@ const userMiddleware = require("../middleware/user.middleware.js");
 const { body } = require("express-validator");
 
 //User login
-userRoute.post(
-  "/login",
-  userController.loginUser
-);
+userRoute.post("/login", userController.loginUser);
 
 // Create a new User
 userRoute.post(
@@ -54,5 +51,11 @@ userRoute.put(
 
 // Delete a User with userID
 userRoute.delete("/:userID", userController.deleteUser);
+
+//forgot password route
+userRoute.post("/forgot", userController.forgotPassword);
+
+//email password reset route
+userRoute.post("/reset/:token", userController.resetPassword);
 
 module.exports = userRoute;

@@ -19,7 +19,12 @@ class noteValidation {
       next();
     }
   };
-
+  /**
+   * 
+   * @param {Object} req 
+   * @param {Object} res 
+   * @param {next} next 
+   */
   ensureToken = (req, res, next) => {
     const bearerHeader = req.headers["authorization"] || req.headers.token;
     if (!bearerHeader) {

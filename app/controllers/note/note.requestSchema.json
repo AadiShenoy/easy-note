@@ -18,7 +18,7 @@
       "body": null,
       "headers": {
         "content-type": "json/application",
-        "authorization": "Bearer"
+        "authorization": "Bearer 'token'"
       }
     },
     "noteFindOneAPI": {
@@ -27,7 +27,7 @@
       "body": null,
       "headers": {
         "content-type": "json/application",
-        "authorization": "Bearer"
+        "authorization": "Bearer 'token'"
       }
     },
     "noteUpdateAPI": {
@@ -39,7 +39,7 @@
       },
       "headers": {
         "content-type": "json/application",
-        "authorization": "Bearer"
+        "authorization": "Bearer 'token'"
       }
     },
     "noteDeleteAPI": {
@@ -48,7 +48,7 @@
       "body": null,
       "headers": {
         "content-type": "json/application",
-        "authorization": "Bearer"
+        "authorization": "Bearer 'token'"
       }
     }
   }

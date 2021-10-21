@@ -1,3 +1,9 @@
+/**
+ * @module
+ * @description
+ * @version
+ * @author
+ */
 const express = require('express');
 const logger = require('./config/logger.js');
 const noteRouter = require('./app/routes/note.routes.js');

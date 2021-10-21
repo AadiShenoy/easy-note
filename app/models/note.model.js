@@ -12,26 +12,40 @@ const NoteSchema = mongoose.Schema(
 const myNote = mongoose.model("Note", NoteSchema);
 
 class noteModel {
-  //creates a note and saves it in database
+  /**
+   * @description creates a note and saves it in database
+   * @param {string} title 
+   * @param {string} content 
+   * @param {callback} callback 
+   * @returns err or data
+   */
   createNote = (title, content, callback) => {
     const note = new myNote({
       title: title,
       content: content,
     });
-    // Save Note in the database
     return note.save((err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
   };
 
-  // Retrieve and return all notes from the database.
+  /**
+   * @description finds all notes present in data base
+   * @param {callback} callback 
+   * @returns err or data
+   */
   findAll = (callback) => {
     return myNote.find((err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
   };
 
-  // Find a single note with a noteId
+  /**
+   * @description finds one note which matches the given noteid
+   * @param {Object} noteId 
+   * @param {callback} callback 
+   * @returns err or data
+   */
   findOne = (noteId, callback) => {
     myNote.findById(noteId, (err, data) => {
       return err ? callback(err, null) : callback(null, data);
@@ -39,9 +53,15 @@ class noteModel {
   };
   
 
-  // Update a note identified by the noteId in the request
+  /**
+   * @description Find note and update it with the request body
+   * @param {Object} noteId 
+   * @param {string} title 
+   * @param {string} content 
+   * @param {callback} callback 
+   * @returns err or data
+   */
   updateNote = (noteId, title, content, callback) => {
-    // Find note and update it with the request body
     myNote.findByIdAndUpdate(
       noteId,
       {
@@ -55,7 +75,12 @@ class noteModel {
     );
   };
 
-  // Delete a note with the specified noteId in the request
+  /**
+   * @description finds a note and deletes it
+   * @param {Object} noteId 
+   * @param {callback} callback 
+   * @returns err or data
+   */
   deleteOne = (noteId, callback) => {
     myNote.findByIdAndRemove(noteId, (err, data) => {
       return err ? callback(err, null) : callback(null, data);

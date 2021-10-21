@@ -1,24 +1,31 @@
-var nodemailer = require('nodemailer');
+var nodemailer = require("nodemailer");
+class nodeMailer {
+  mailer = (email, token) => {
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "aadishenoy123@gmail.com",
+        pass: "ADIthya@123",
+      },
+    });
 
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'aadishenoy123@gmail.com',
-    pass: 'ADIthya@123'
-  }
-});
+    var mailOptions = {
+      from: "aadishenoy123@gmail.com",
+      to: email,
+      subject: "Sending Email using Node.js",
+      html: `<a>${token}</a>`,
+      text: "password reset",
+    };
 
-var mailOptions = {
-  from: 'aadishenoy123@gmail.com',
-  to: 'adithyashenoy6@gmail.com',
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
-};
+    return transporter
+      .sendMail(mailOptions)
+      .then((data) => {
+        return "Email sent successfully!!";
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+}
 
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
+module.exports = new nodeMailer();

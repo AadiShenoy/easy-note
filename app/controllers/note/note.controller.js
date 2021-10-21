@@ -1,38 +1,54 @@
+/**
+ * @requires noteService,dtoObject
+ */
 const noteService = require("../../service/note.service");
 const dtoObject = require("./note.responseSchema");
 
 let responseObject;
 class noteController {
-  //creates a note in the database
+
+  /**
+   * @description Handles the request and response for creating a note
+   * @param {Object} req 
+   * @param {Object} res 
+   */
   createNote = (req, res) => {
     let body = req.body;
     noteService.createNote(body, (err, data) => {
       if (err) {
         responseObject = dtoObject.noteApiFailure;
         responseObject.message = err.message;
-        res.send(responseObject);
+        return res.send(responseObject);
       }
       responseObject = dtoObject.noteApiSuccess;
       responseObject.message = data;
-      res.send(responseObject);
+      return res.send(responseObject);
     });
   };
 
-  // Retrieve and return all notes from the database.
+  /**
+   * @description Handles the request and response for finding all notes
+   * @param {Object} req 
+   * @param {Object} res 
+   */
   findAll = (req, res) => {
     noteService.findAll((err, data) => {
       if (err) {
         responseObject = dtoObject.noteApiFailure;
         responseObject.message = err.message;
-        res.send(responseObject);
+        return res.send(responseObject);
       }
       responseObject = dtoObject.noteApiSuccess;
       responseObject.message = data;
-      res.send(responseObject);
+      return res.send(responseObject);
     });
   };
 
-  // Find a single note with a noteId
+  /**
+   * @description Handles the request and response for finding a single note
+   * @param {Object} req 
+   * @param {Object} res 
+   */
   findOne = (req, res) => {
     noteService.findOne(req.params.noteId, (err, data) => {
       if (err) {
@@ -56,7 +72,11 @@ class noteController {
     });
   };
 
-  // Update a note identified by the noteId in the request
+  /**
+   * @description Handles the request and response for updating a note
+   * @param {Object} req 
+   * @param {Object} res 
+   */
   updateNote = (req, res) => {
     let id = req.params.noteId;
     let body = req.body;
@@ -65,23 +85,27 @@ class noteController {
         if (err.kind === "ObjectId") {
           responseObject = dtoObject.noteApiFindFailure;
           responseObject.message = err.message;
-          res.send(responseObject);
+          return res.send(responseObject);
         }
         responseObject = dtoObject.noteApiFailure;
         responseObject.message = err.message;
-        res.send(responseObject);
+        return res.send(responseObject);
       }
       if (!data) {
         responseObject = dtoObject.noteApiFindFailure;
-        res.send(responseObject);
+        return res.send(responseObject);
       }
       responseObject = dtoObject.noteApiSuccess;
       responseObject.message = data;
-      res.send(responseObject);
+      return res.send(responseObject);
     });
   };
 
-  // Delete a note with the specified noteId in the request
+  /**
+   * @description Handles the request and response for deleting a note
+   * @param {Object} req 
+   * @param {Object} res 
+   */
   deleteOne = (req, res) => {
     let id = req.params.noteId;
     noteService.deleteOne(id, (err, data) => {
@@ -89,19 +113,19 @@ class noteController {
         if (err.kind === "ObjectId") {
           responseObject = dtoObject.noteApiFindFailure;
           responseObject.message = err.message;
-          res.send(responseObject);
+          return res.send(responseObject);
         }
         responseObject = dtoObject.noteApiFailure;
         responseObject.message = err.message;
-        res.send(responseObject);
+        return res.send(responseObject);
       }
       if (!data) {
         responseObject = dtoObject.noteApiFindFailure;
-        res.send(responseObject);
+        return res.send(responseObject);
       }
       responseObject = dtoObject.noteApiSuccess;
       responseObject.message = "deleted successfully";
-      res.send(responseObject);
+      return res.send(responseObject);
     });
   };
 }
