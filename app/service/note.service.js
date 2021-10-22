@@ -8,7 +8,7 @@ class noteService {
    * @returns err or data
    */
   createNote = (body, callback) => {
-    noteModel.createNote(body.title, body.content, (err, data) => {
+    noteModel.createNote(body.title, body.content,body.userId, (err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
   };
@@ -17,8 +17,8 @@ class noteService {
    * @param {callback} callback
    * @returns err or data
    */
-  findAll = (callback) => {
-    noteModel.findAll((err, data) => {
+  findAll = (userId,callback) => {
+    noteModel.findAll(userId,(err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
   };
@@ -28,8 +28,8 @@ class noteService {
    * @param {callback} callback
    * @returns err or data
    */
-  findOne = (noteId, callback) => {
-    noteModel.findOne(noteId, (err, data) => {
+  findOne = (userId,noteId, callback) => {
+    noteModel.findOne(userId,noteId, (err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
   };
@@ -40,8 +40,8 @@ class noteService {
    * @param {callback} callback
    * @returns err or data
    */
-  updateNote = (noteId, body, callback) => {
-    noteModel.updateNote(noteId, body.title, body.content, (err, data) => {
+  updateNote = (userId,noteId, body, callback) => {
+    noteModel.updateNote(userId,noteId, body, (err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
   };
@@ -51,8 +51,8 @@ class noteService {
    * @param {callback} callback
    * @returns err or data
    */
-  deleteOne = (noteId, callback) => {
-    noteModel.deleteOne(noteId, (err, data) => {
+  deleteOne = (userId,noteId, callback) => {
+    noteModel.deleteOne(userId,noteId, (err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
   };

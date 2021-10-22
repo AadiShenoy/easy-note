@@ -182,7 +182,6 @@ class userController {
         res.send("Result:" + data);
       })
       .catch((err) => {
-        console.log("error:" + err);
         res.send(err);
       });
   };

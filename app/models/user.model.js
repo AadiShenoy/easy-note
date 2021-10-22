@@ -17,6 +17,7 @@ const userSchema = mongoose.Schema(
     },
     password: String,
     resetPasswordToken: String,
+    resetPasswordExpires: Date,
   },
   {
     timestamps: true,
@@ -132,12 +133,13 @@ class userModel {
         if (!data) {
           throw "Email not found";
         } else {
-          let token = jwtHelper.generateToken();
-          data.resetPasswordToken = token;
+          let randomToken = jwtHelper.generateRandomCode();
+          data.resetPasswordToken = randomToken;
+          data.resetPasswordExpires = Date.now() + 3600000;
           return data
             .save()
-            .then((data) => {
-              return data;
+            .then((res) => {
+              return res;
             })
             .catch((err) => {
               throw err;
@@ -156,14 +158,18 @@ class userModel {
    */
   resetPassword = (token, newPassword) => {
     return myUser
-      .findOne({ resetPasswordToken: token })
+      .findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: { $gt: Date.now() },
+      })
       .then((data) => {
         if (!data) {
           throw "token not found";
         } else {
           encryptedPassword = bcrypt.hashSync(newPassword, 10);
           (data.password = encryptedPassword),
-            (data.resetPasswordToken = undefined);
+            (data.resetPasswordToken = undefined),
+            (data.resetPasswordExpires = undefined);
           return data
             .save()
             .then((data) => {

@@ -32,7 +32,7 @@ class noteController {
    * @param {Object} res 
    */
   findAll = (req, res) => {
-    noteService.findAll((err, data) => {
+    noteService.findAll(req.body.userId,(err, data) => {
       if (err) {
         responseObject = dtoObject.noteApiFailure;
         responseObject.message = err.message;
@@ -50,16 +50,15 @@ class noteController {
    * @param {Object} res 
    */
   findOne = (req, res) => {
-    noteService.findOne(req.params.noteId, (err, data) => {
+    noteService.findOne(req.body.userId,req.params.noteId, (err, data) => {
       if (err) {
-        console.log(err);
         if (err.kind === "ObjectId") {
           responseObject = dtoObject.noteApiFindFailure;
           responseObject.message = err.message;
           return res.send(responseObject);
         }
         responseObject = dtoObject.noteApiFailure;
-        responseObject.message = err.message;
+        responseObject.message = err;
         return res.send(responseObject);
       }
       if (!data) {
@@ -78,9 +77,8 @@ class noteController {
    * @param {Object} res 
    */
   updateNote = (req, res) => {
-    let id = req.params.noteId;
     let body = req.body;
-    noteService.updateNote(id, body, (err, data) => {
+    noteService.updateNote(req.body.userId,req.params.noteId, body, (err, data) => {
       if (err) {
         if (err.kind === "ObjectId") {
           responseObject = dtoObject.noteApiFindFailure;
@@ -88,7 +86,7 @@ class noteController {
           return res.send(responseObject);
         }
         responseObject = dtoObject.noteApiFailure;
-        responseObject.message = err.message;
+        responseObject.message = err;
         return res.send(responseObject);
       }
       if (!data) {
@@ -107,8 +105,7 @@ class noteController {
    * @param {Object} res 
    */
   deleteOne = (req, res) => {
-    let id = req.params.noteId;
-    noteService.deleteOne(id, (err, data) => {
+    noteService.deleteOne(req.body.userId,req.params.noteId, (err, data) => {
       if (err) {
         if (err.kind === "ObjectId") {
           responseObject = dtoObject.noteApiFindFailure;
@@ -116,7 +113,7 @@ class noteController {
           return res.send(responseObject);
         }
         responseObject = dtoObject.noteApiFailure;
-        responseObject.message = err.message;
+        responseObject.message = err;
         return res.send(responseObject);
       }
       if (!data) {

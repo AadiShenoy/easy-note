@@ -36,6 +36,7 @@ class noteValidation {
       if (err) {
         res.send(err);
       }
+      req.body.userId = data._id;
       next();
     });
   };

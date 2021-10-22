@@ -16,8 +16,8 @@ class userService {
         return callback(err, null);
       } else {
         if (bcrypt.compareSync(body.password, data.password)) {
-          var token = jwtHelper.generateToken(body.email);
-          var result = data + "Token:" + token;
+          var token = jwtHelper.generateToken(data._id);
+          var result = {"data":data,"Token":token} ;
           return callback(null, result);
         } else {
           return callback("password mismatch");
