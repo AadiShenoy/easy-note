@@ -5,7 +5,7 @@ class nodeMailer {
       service: "gmail",
       auth: {
         user: "aadishenoy123@gmail.com",
-        pass: "ADIthya@123",
+        pass: process.env.password,
       },
     });
 
@@ -13,7 +13,7 @@ class nodeMailer {
       from: "aadishenoy123@gmail.com",
       to: email,
       subject: "Sending Email using Node.js",
-      html: `<a>${token}</a>`,
+      html: `<a href='http://localhost:3000/user/reset/${token}'>click here</a>`,
       text: "password reset",
     };
 
