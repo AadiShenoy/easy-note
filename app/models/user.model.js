@@ -5,11 +5,6 @@ const userSchema = mongoose.Schema(
   {
     firstName: String,
     lastName: String,
-    age: {
-      type: Number,
-      min: 1,
-      max: 100,
-    },
     email: {
       type: String,
       unique: true,
@@ -54,11 +49,10 @@ class userModel {
     const user = new myUser({
       firstName: body.firstName,
       lastName: body.lastName,
-      age: body.age,
       email: body.email,
       password: encryptedPassword,
     });
-    console.log(user);
+
     return user.save((err, data) => {
       return err ? callback(err, null) : callback(null, data);
     });
@@ -101,7 +95,6 @@ class userModel {
       {
         firstName: body.firstName,
         lastName: body.lastName,
-        age: body.age,
         email: body.email,
       },
       { new: true },

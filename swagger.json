@@ -5,7 +5,7 @@
     "title": "Fundoo Note App",
     "description": "Simple note Api"
   },
-  "host": "localhost:3000",
+  "host": "localhost:3001",
   "basePath": "/",
   "tags": [
     {

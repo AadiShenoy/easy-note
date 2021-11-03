@@ -13,14 +13,14 @@ class nodeMailer {
       from: "aadishenoy123@gmail.com",
       to: email,
       subject: "Sending Email using Node.js",
-      html: `<a href='http://localhost:3000/user/reset/${token}'>click here</a>`,
+      html: `<a href='http://localhost:3000/reset/${token}'>click here</a>`,
       text: "password reset",
     };
 
     return transporter
       .sendMail(mailOptions)
       .then((data) => {
-        return "Email sent successfully!!";
+        return data;
       })
       .catch((err) => {
         return err;

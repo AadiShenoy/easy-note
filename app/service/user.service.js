@@ -84,9 +84,11 @@ class userService {
     return userModel
       .forgotPassword(email)
       .then((data) => {
+        let token = data.resetPasswordToken
         return mailHelper
-          .mailer(data.email, data.resetPasswordToken)
+          .mailer(data.email, token)
           .then((data) => {
+            data.token = token
             return data;
           })
           .catch((err) => {

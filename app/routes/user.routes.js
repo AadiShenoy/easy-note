@@ -20,8 +20,8 @@ userRoute.post(
     .withMessage(
       "Last Name should begin with caps and should be minimum of length 3"
     ),
-  body("age").isNumeric().withMessage("Enter a valid age between (1-100"),
   body("email").isEmail().withMessage("Enter a valid Email"),
+  body("password").matches("^[a-zA-Z0-9@#$%^&*()!~]{8,}$").withMessage("Enter a valid password"),
   userController.registerUser
 );
 
