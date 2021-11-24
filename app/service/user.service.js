@@ -17,7 +17,7 @@ class userService {
       } else {
         if (bcrypt.compareSync(body.password, data.password)) {
           var token = jwtHelper.generateToken(data._id);
-          var result = {"data":data,"Token":token} ;
+          var result = {"data":data,"token":token} ;
           return callback(null, result);
         } else {
           return callback("password mismatch");
