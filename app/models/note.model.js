@@ -4,7 +4,9 @@ const NoteSchema = mongoose.Schema(
     title: String,
     content: String,
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    isTrash:Boolean
+    isTrash:Boolean,
+    color:String,
+    image:String
   },
   {
     timestamps: true,
@@ -26,7 +28,9 @@ class noteModel {
       title: title,
       content: content,
       userId: userId,
-      isTrash:false
+      isTrash:false,
+      color:"white",
+      image:""
     });
     return note.save((err, data) => {
       return err ? callback(err, null) : callback(null, data);
@@ -84,7 +88,9 @@ class noteModel {
       {
         title: body.title,
         content: body.content,
-        isTrash:body.isTrash
+        isTrash:body.isTrash,
+        color:body.color,
+        image:body.image
       },
       { new: true },
       (error, data) => {
