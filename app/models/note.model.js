@@ -82,7 +82,6 @@ class noteModel {
    * @returns err or data
    */
   updateNote = (userId, noteId, body, callback) => {
-    console.log(body);
     return myNote.findOneAndUpdate(
       { userId: userId, _id: noteId },
       {

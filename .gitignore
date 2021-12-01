@@ -1,4 +1,5 @@
 node_modules/
 logger/
 package-lock.json
+uploads/
 .env
