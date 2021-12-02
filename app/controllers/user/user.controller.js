@@ -1,10 +1,20 @@
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : gets req and res from routes and passes it to the service layer
+ * @file            : user.controller.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
+
 const userService = require("../../service/user.service");
 const logger = require("../../../config/logger");
 const { validationResult } = require("express-validator");
 const dtoObject = require("./user.responseSchema");
 let responseObject;
 
-class userController {
+class UserController {
   /**
    * @description Handles request and response for user login
    * @param {Object} req
@@ -212,4 +222,4 @@ class userController {
   };
 }
 
-module.exports = new userController();
+module.exports = new UserController();

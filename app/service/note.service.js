@@ -1,6 +1,16 @@
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : get the values from the controller and process them for the notes in fundo notes  
+ * @file            : note.service.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
+
 const noteModel = require("../models/note.model.js");
 
-class noteService {
+class NoteService {
   /**
    * @description Service layer function to create a note
    * @param {Object} body
@@ -58,4 +68,4 @@ class noteService {
   };
 }
 
-module.exports = new noteService();
+module.exports = new NoteService();

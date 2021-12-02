@@ -1,3 +1,13 @@
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : note model creates note schema and performs db operation  
+ * @file            : note.model.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
+
 const mongoose = require("mongoose");
 const NoteSchema = mongoose.Schema(
   {
@@ -15,7 +25,7 @@ const NoteSchema = mongoose.Schema(
 
 const myNote = mongoose.model("Note", NoteSchema);
 
-class noteModel {
+class NoteModel {
   /**
    * @description creates a note and saves it in database
    * @param {string} title
@@ -125,4 +135,4 @@ class noteModel {
   };
 }
 
-module.exports = new noteModel();
+module.exports = new NoteModel();

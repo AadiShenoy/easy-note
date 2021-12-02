@@ -1,3 +1,13 @@
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : connects data base
+ * @file            : dbConnect.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
+
 const mongoose = require('mongoose');
 const dbConfig = require('./database.config.js');
 const logger = require('./logger.js');

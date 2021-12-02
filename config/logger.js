@@ -1,10 +1,12 @@
-/**
- * @author adithya s shenoy
- * @description
- * @file
- * @since
- * @todo
- */
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : creates custom logger for logging errors and infos
+ * @file            : logger.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
 
 const { createLogger, format, transports } = require("winston");
 require("winston-daily-rotate-file");

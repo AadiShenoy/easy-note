@@ -1,3 +1,13 @@
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : note routes for note url end points
+ * @file            : note.routes.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
+
 const express = require("express");
 const noteController = require("../controllers/note/note.controller");
 const noteMiddleware = require("../middleware/note.middleware.js");

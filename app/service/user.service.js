@@ -1,9 +1,19 @@
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : get the values from the controller and process them for the users  
+ * @file            : user.service.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
+
 const userModel = require("../models/user.model.js");
 const jwtHelper = require("../../utility/jwt");
 const mailHelper = require("../../utility/mailer");
 const bcrypt = require("bcrypt");
 
-class userService {
+class UserService {
   /**
    * @description Service layer function for user login
    * @param {Object} body
@@ -116,4 +126,4 @@ class userService {
   }
 }
 
-module.exports = new userService();
+module.exports = new UserService();

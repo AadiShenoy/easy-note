@@ -1,12 +1,19 @@
-/**
- * @requires noteService,dtoObject,logger
- */
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : gets req and res from routes and passes it to the service layer
+ * @file            : note.controller.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
+
 const noteService = require("../../service/note.service");
 const dtoObject = require("./note.responseSchema");
 const logger = require("../../../config/logger");
 const multer = require("../../../utility/multer");
 let responseObject;
-class noteController {
+class NoteController {
   /**
    * @description Handles the request and response for creating a note
    * @param {Object} req
@@ -160,4 +167,4 @@ class noteController {
   }
 }
 
-module.exports = new noteController();
+module.exports = new NoteController();

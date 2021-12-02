@@ -1,3 +1,13 @@
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : middleware for user validation
+ * @file            : user.middleware.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
+
 class userMiddleware {
   userValidation = (req, res, next) => {
     //first name validation

@@ -1,0 +1,48 @@
+{
+  "labelSchema": {
+    "labelCreateAPI": {
+      "url": "/labels",
+      "method": "POST",
+      "body": {
+        "title": "String"
+      },
+      "headers": {
+        "content-type": "json/application"
+      }
+    },
+    "labelFindAllAPI": {
+      "url": "/labels",
+      "method": "GET",
+      "body": null,
+      "headers": {
+        "content-type": "json/application"
+      }
+    },
+    "labelFindOneAPI": {
+      "url": "/labels/:labelID",
+      "method": "GET",
+      "body": null,
+      "headers": {
+        "content-type": "json/application"
+      }
+    },
+    "labelUpdateAPI": {
+      "url": "/labels/:labelID",
+      "method": "PUT",
+      "body": {
+        "title": "String"
+      },
+      "headers": {
+        "content-type": "json/application"
+      }
+    },
+    "labelDeleteAPI": {
+      "url": "/labels/:labelID",
+      "method":"DELETE",
+      "body": null,
+      "headers": {
+        "content-type": "json/application"
+      }
+    }
+  }
+}

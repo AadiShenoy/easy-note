@@ -1,3 +1,13 @@
+/* ************************************************************************
+ * Execution        : 1. default node  cmd> nodemon server.js              
+ * @descrition      : user model creates user schema and performs db operation 
+ * @file            : user.model.js
+ * @author          : Adithya S Shenoy
+ * @version         : 1.0
+ * @since           : 7-Oct-2021
+ * 
+ **************************************************************************/
+
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwtHelper = require("../../utility/jwt");
@@ -21,7 +31,7 @@ const userSchema = mongoose.Schema(
 
 const myUser = mongoose.model("User", userSchema);
 let encryptedPassword;
-class userModel {
+class UserModel {
   /**
    * @description model function for user login
    * @param {Object} body
@@ -179,4 +189,4 @@ class userModel {
   };
 }
 
-module.exports = new userModel();
+module.exports = new UserModel();
