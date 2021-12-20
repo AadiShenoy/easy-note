@@ -44,3 +44,5 @@ const server = app.listen(process.env.portNumber, () => {
   logger.info("Example app listening at port");
   db.dbConnection();
 });
+
+module.exports = app;

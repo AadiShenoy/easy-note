@@ -12,9 +12,17 @@ const express = require("express");
 const labelController = require("../controllers/label/label.controller");
 const labelRoute = express.Router();
 const labelMiddleware = require("../middleware/note.middleware.js");
+const { body } = require("express-validator");
 
 // Create a new Label
-labelRoute.post("/", labelMiddleware.ensureToken, labelController.createLabel);
+labelRoute.post(
+  "/",
+  body("title")
+    .matches("^[A-Z][a-zA-Z ]{2,}")
+    .withMessage("Title cannot be empty"),
+  labelMiddleware.ensureToken,
+  labelController.createLabel
+);
 
 // Retrieve all Labels
 labelRoute.get("/", labelMiddleware.ensureToken, labelController.findAll);
@@ -29,6 +37,9 @@ labelRoute.get(
 // Update a Label with LabelId
 labelRoute.put(
   "/:labelId",
+  body("title")
+    .matches("^[A-Z][a-zA-Z ]{2,}")
+    .withMessage("Title cannot be empty"),
   labelMiddleware.ensureToken,
   labelController.updateLabel
 );

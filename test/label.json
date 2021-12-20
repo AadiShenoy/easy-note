@@ -1,0 +1,14 @@
+{
+    "loginDetails": {
+      "email": "Adithya@gmail.com",
+      "password": "Adithya@123"
+    },
+    "ValidLabelData":{
+      "title": "Demo Label"
+    },
+    "InvalidLabelData":{
+      "title": ""
+    }
+  
+  }
+  

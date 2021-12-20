@@ -12,6 +12,7 @@ const labelService = require("../../service/label.service");
 const dtoObject = require("../label/label.responseSchema");
 const logger = require("../../../config/logger");
 let responseObject;
+const { validationResult } = require("express-validator");
 
 class LabelController {
   /**
@@ -20,6 +21,12 @@ class LabelController {
    * @param {Object} res
    */
   createLabel = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      responseObject = dtoObject.labelApiFailure;
+      responseObject.message = errors.array();
+      return res.send(responseObject);
+    }
     try {
       const data = await labelService.createlabel(req.body);
       logger.info("label creation Successful", data);
@@ -92,6 +99,10 @@ class LabelController {
    * @param {Object} res
    */
   updateLabel = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     try {
       const data = await labelService.updatelabel(
         req.body.userId,

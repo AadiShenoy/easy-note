@@ -1,0 +1,34 @@
+{
+  "validUserRegisteration": {
+    "firstName": "Abdul",
+    "lastName": "Ziyan",
+    "email": "ziyan@gmail.com",
+    "password": "Ziyan@123"
+  },
+  "InvalidUserRegisteration": {
+    "firstName": "Abdul",
+    "lastName": "",
+    "email": "ziyan@gmail.com",
+    "password": "Ziyan@123"
+  },
+  "validLoginDetail": {
+    "email": "ziyan@gmail.com",
+    "password": "Ziyan@123"
+  },
+  "InvalidLoginDetail": {
+    "email": "ziyan@gmail.com",
+    "password": "Ziyan"
+  },
+  "validUserData": {
+    "firstName": "Abdul",
+    "lastName": "Ziyan",
+    "email": "abdulziyan@gmail.com",
+    "password": "Ziyan@123"
+  },
+  "InvalidUserData": {
+    "firstName": "Abdul",
+    "lastName": "",
+    "email": "abdulziyan@gmail.com",
+    "password": "Ziyan@123"
+  }
+}

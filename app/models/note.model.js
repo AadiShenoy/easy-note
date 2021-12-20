@@ -1,22 +1,27 @@
 /* ************************************************************************
- * Execution        : 1. default node  cmd> nodemon server.js              
- * @descrition      : note model creates note schema and performs db operation  
+ * Execution        : 1. default node  cmd> nodemon server.js
+ * @descrition      : note model creates note schema and performs db operation
  * @file            : note.model.js
  * @author          : Adithya S Shenoy
  * @version         : 1.0
  * @since           : 7-Oct-2021
- * 
+ *
  **************************************************************************/
 
 const mongoose = require("mongoose");
+const { promisify } = require("util");
+const logger = require("../../config/logger");
+const fs = require("fs");
+const unlinkAsync = promisify(fs.unlink);
+
 const NoteSchema = mongoose.Schema(
   {
     title: String,
     content: String,
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    isTrash:Boolean,
-    color:String,
-    image:String
+    isTrash: Boolean,
+    color: String,
+    image: String,
   },
   {
     timestamps: true,
@@ -38,9 +43,9 @@ class NoteModel {
       title: title,
       content: content,
       userId: userId,
-      isTrash:false,
-      color:"white",
-      image:""
+      isTrash: false,
+      color: "white",
+      image: "",
     });
     return note.save((err, data) => {
       return err ? callback(err, null) : callback(null, data);
@@ -57,7 +62,7 @@ class NoteModel {
       .find({ userId: userId })
       .populate({
         path: "userId",
-        select: ["firstName", "lastName", "age", "email"],
+        select: ["firstName", "lastName", "email"],
       })
       .exec((error, data) => {
         return error ? callback(error, null) : callback(null, data);
@@ -97,9 +102,9 @@ class NoteModel {
       {
         title: body.title,
         content: body.content,
-        isTrash:body.isTrash,
-        color:body.color,
-        image:body.image
+        isTrash: body.isTrash,
+        color: body.color,
+        image: body.image,
       },
       { new: true },
       (error, data) => {
@@ -129,6 +134,14 @@ class NoteModel {
       if (!data) {
         return callback("You dont have access to this note", null);
       } else {
+        unlinkAsync(
+          `C:\\Users\\adithya.shenoy_ymedi\\Desktop\\node\\Nodejs\\easy-note\\uploads\\images\\${data.image}`,
+          (err, res) => {
+            if (err) {
+              logger.error(err);
+            }
+          }
+        );
         return callback(null, data);
       }
     });

@@ -3,3 +3,4 @@ logger/
 package-lock.json
 uploads/
 .env
+.nyc_output/
