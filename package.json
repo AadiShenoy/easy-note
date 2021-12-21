@@ -4,7 +4,7 @@
   "description": "fundoo note application",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "nyc mocha ./test --exit --inspect=0.0.0.0:9229"
   },
   "author": "adithya s shenoy",
