@@ -14,8 +14,8 @@ const noteRouter = require("./app/routes/note.routes.js");
 const userRouter = require("./app/routes/user.routes.js");
 const labelRouter = require("./app/routes/label.routes.js");
 const db = require("./config/dbConnect");
-// const swaggerUi = require("swagger-ui-express");
-// const swaggerDocument = require("./swagger.json");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 const cors = require("cors");
 require('dotenv').config();
 
@@ -35,7 +35,7 @@ app.use("/notes", noteRouter);
 app.use("/user", userRouter);
 app.use("/label", labelRouter);
 
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.static("uploads"));
 
