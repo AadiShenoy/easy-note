@@ -39,8 +39,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.static("uploads"));
 
+const PORT = process.env.PORT || process.env.portNumber 
 //connecting to server
-const server = app.listen(process.env.portNumber, () => {
+const server = app.listen(PORT, () => {
   logger.info("Example app listening at port");
   db.dbConnection();
 });
