@@ -1,11 +1,11 @@
 /* ************************************************************************
- * Execution        : 1. default node  cmd> nodemon server.js              
- * @descrition      : user model creates user schema and performs db operation 
+ * Execution        : 1. default node  cmd> nodemon server.js
+ * @descrition      : user model creates user schema and performs db operation
  * @file            : user.model.js
  * @author          : Adithya S Shenoy
  * @version         : 1.0
  * @since           : 7-Oct-2021
- * 
+ *
  **************************************************************************/
 
 const mongoose = require("mongoose");
@@ -73,10 +73,13 @@ class UserModel {
    * @param {callback} callback
    * @returns err or data
    */
-  findAllUser = (callback) => {
-    return myUser.find((err, data) => {
-      return err ? callback(err, null) : callback(null, data);
-    });
+  findAllUser = async () => {
+    try {
+      let data = await myUser.find();
+      return data;
+    } catch (error) {
+      throw error;
+    }
   };
 
   /**

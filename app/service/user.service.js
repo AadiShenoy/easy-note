@@ -1,18 +1,18 @@
 /* ************************************************************************
- * Execution        : 1. default node  cmd> nodemon server.js              
- * @descrition      : get the values from the controller and process them for the users  
+ * Execution        : 1. default node  cmd> nodemon server.js
+ * @descrition      : get the values from the controller and process them for the users
  * @file            : user.service.js
  * @author          : Adithya S Shenoy
  * @version         : 1.0
  * @since           : 7-Oct-2021
- * 
+ *
  **************************************************************************/
 
 const userModel = require("../models/user.model.js");
 const jwtHelper = require("../../utility/jwt");
 const mailHelper = require("../../utility/mailer");
 const bcrypt = require("bcrypt");
-
+const redis = require("../../utility/redis/cache")
 class UserService {
   /**
    * @description Service layer function for user login
@@ -27,7 +27,7 @@ class UserService {
       } else {
         if (bcrypt.compareSync(body.password, data.password)) {
           var token = jwtHelper.generateToken(data._id);
-          var result = {"data":data,"token":token} ;
+          var result = { data: data, token: token };
           return callback(null, result);
         } else {
           return callback("password mismatch");
@@ -49,11 +49,20 @@ class UserService {
    * @description Service layer function for finding all user
    * @param {callback} callback
    */
-  findAllUser = (callback) => {
-    userModel.findAllUser((err, data) => {
-      return err ? callback(err, null) : callback(null, data);
-    });
+  findAllUser = async () => {
+    try {
+      let data = await redis.getUser("user")
+      if(data === null){
+        data = await userModel.findAllUser();
+        await redis.setUser("user",JSON.stringify(data))
+      }
+      await redis.closeConnection();
+      return JSON.parse(data);
+    } catch (error) {
+      throw error;
+    }
   };
+  
   /**
    * @description Service layer function for finding particular user using email
    * @param {string} email
@@ -87,18 +96,18 @@ class UserService {
   };
   /**
    * @description Service layer function for user forgot password
-   * @param {string} email 
-   * @returns 
+   * @param {string} email
+   * @returns
    */
   forgotPassword = (email) => {
     return userModel
       .forgotPassword(email)
       .then((data) => {
-        let token = data.resetPasswordToken
+        let token = data.resetPasswordToken;
         return mailHelper
           .mailer(data.email, token)
           .then((data) => {
-            data.token = token
+            data.token = token;
             return data;
           })
           .catch((err) => {
@@ -111,19 +120,20 @@ class UserService {
   };
   /**
    * @description Service layer function for user reset password
-   * @param {string} token 
-   * @param {string} password 
-   * @returns 
+   * @param {string} token
+   * @param {string} password
+   * @returns
    */
-  resetPassword = (token,password) =>{
-    return userModel.resetPassword(token,password)
-    .then(data => {
-      return data;
-    })
-    .catch(err => {
-      throw err;
-    })
-  }
+  resetPassword = (token, password) => {
+    return userModel
+      .resetPassword(token, password)
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  };
 }
 
 module.exports = new UserService();

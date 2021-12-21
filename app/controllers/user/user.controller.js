@@ -1,11 +1,11 @@
 /* ************************************************************************
- * Execution        : 1. default node  cmd> nodemon server.js              
+ * Execution        : 1. default node  cmd> nodemon server.js
  * @descrition      : gets req and res from routes and passes it to the service layer
  * @file            : user.controller.js
  * @author          : Adithya S Shenoy
  * @version         : 1.0
  * @since           : 7-Oct-2021
- * 
+ *
  **************************************************************************/
 
 const userService = require("../../service/user.service");
@@ -70,19 +70,19 @@ class UserController {
    * @param {Object} req
    * @param {Object} res
    */
-  findAllUser = (req, res) => {
-    userService.findAllUser((err, data) => {
-      if (err) {
-        logger.error(err);
-        responseObject = dtoObject.userApiFailure;
-        responseObject.message = err.message;
-        return res.send(responseObject);
-      }
-      logger.info("Retrieval successfull");
+  findAllUser = async(req, res) => {
+    try {
+      let data = await userService.findAllUser()
       responseObject = dtoObject.userApiSuccess;
       responseObject.message = data;
+      logger.info("Retrieval successfull");
       return res.send(responseObject);
-    });
+    } catch (error) {
+      logger.error(error);
+      responseObject = dtoObject.userApiFailure;
+      responseObject.message = error.message;
+      return res.send(responseObject);
+    }
   };
 
   /**
@@ -98,7 +98,7 @@ class UserController {
         if (err.kind === "ObjectId") {
           responseObject = dtoObject.userApiFindFailure;
           responseObject.message = err.message;
-         return res.send(responseObject);
+          return res.send(responseObject);
         }
         responseObject = dtoObject.userApiFailure;
         responseObject.message = err.message;
@@ -181,8 +181,8 @@ class UserController {
   };
   /**
    * @description Handles request and response for forgot password
-   * @param {Object} req 
-   * @param {Object} res 
+   * @param {Object} req
+   * @param {Object} res
    */
   forgotPassword = (req, res) => {
     let email = req.body.email;
@@ -201,14 +201,14 @@ class UserController {
   };
   /**
    * @description Handles request and response for resetting the password
-   * @param {Object} req 
-   * @param {Object} res 
+   * @param {Object} req
+   * @param {Object} res
    */
   resetPassword = (req, res) => {
     let token = req.params.token;
-    let password = req.body.password
+    let password = req.body.password;
     userService
-      .resetPassword(token,password)
+      .resetPassword(token, password)
       .then((data) => {
         responseObject = dtoObject.userValidationSuccess;
         responseObject.message = "Password updated successfully";
